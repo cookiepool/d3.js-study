@@ -22,9 +22,14 @@ const routes = [
         component: () => import('@/views/child-components/up-en-ex.vue')
       },
       {
-        path: 'draw-react',
-        name: 'DrawReact',
-        component: () => import('@/views/child-components/draw-react.vue')
+        path: 'draw-rect',
+        name: 'DrawRect',
+        component: () => import('@/views/child-components/draw-rect.vue')
+      },
+      {
+        path: 'layout-concepts',
+        name: 'LayoutConcepts',
+        component: () => import('@/views/child-components/layout-concepts.vue')
       }
     ]
   }

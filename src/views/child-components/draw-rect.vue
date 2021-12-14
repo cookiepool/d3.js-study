@@ -33,7 +33,7 @@ export default {
         .attr('transform', 'translate(' + marge.top + ',' + marge.left + ')');
 
       let rectHeight = 30; //设置每一个矩形的高度
-      let a = g
+      let pillar = g
         .selectAll('rect')
         .data(dataset) // dataset里面有5个数据，根据enter()不足补足的原则，这儿会补足5个react元素
         .enter()
@@ -45,11 +45,22 @@ export default {
         })
         .attr('width', function (d) {
           //设置宽
-          return scaleLinear(d);
+          return 0;
         })
-        .attr('height', rectHeight - 5) //设置长
-        .attr('fill', 'red'); //颜色填充
-      a.on('mouseover', function (e) {
+        .attr('height', rectHeight - 5)
+        .attr('fill', 'red');
+      // 增加动画效果
+      pillar
+        .transition()
+        .duration(800)
+        .delay((item, idx) => {
+          return 0;
+        })
+        .attr('width', function (d) {
+          return scaleLinear(d);
+        });
+      // 事件绑定
+      pillar.on('mouseover', function (e) {
         console.log('mouseover');
         console.log(this);
       });
@@ -90,12 +101,12 @@ export default {
         .range([height - marge.top - marge.bottom, 0]);
       // let yAxis = d3.axisLeft(yScale);
 
-      let gs = g.selectAll('rect').data(dataset).enter().append('g');
-
       let rectPadding = 20;
+      let gs = g.selectAll('g').data(dataset).enter().append('g');
 
       // 绘制矩形
-      gs.append('rect')
+      let rectSets = gs
+        .append('rect')
         .attr('x', (item, idx) => {
           return xScale(idx) + rectPadding / 2;
         })
@@ -105,29 +116,28 @@ export default {
         .attr('width', () => {
           return xScale.step() - rectPadding;
         })
-        .attr('fill', '#6CAE75')
-        // 增加动画效果
+        .attr('height', 0)
+        .attr('fill', '#6CAE75');
+      // 添加过渡动画
+      rectSets
         .transition()
         .duration(800)
-        .delay((item, idx) => {
-          // return idx * 200;
-          return 0;
-        })
-        .attr('height', 0)
+        .delay(0)
         .attr('y', (item) => {
           return yScale(item);
         })
         .attr('height', (item) => {
           return height - marge.top - marge.bottom - yScale(item);
         });
-
-      gs.on('mouseover', (e) => {
-        console.log('mouse');
+      // 添加事件绑定
+      rectSets.on('mouseover', function (e) {
+        console.log(e);
+        console.log('mouseover');
         console.log(this);
       });
 
-      // 绘制文字
-      gs.append('text')
+      let textSets = gs
+        .append('text')
         .attr('x', (item, idx) => {
           return xScale(idx) + rectPadding / 2;
         })
@@ -141,17 +151,16 @@ export default {
         .attr('dy', () => {
           return -10;
         })
-        .attr('transform', 'translate(-10, 0)')
+        .attr('transform', 'translate(-15, 0)')
         .text((item) => {
           return item;
         })
-        .style('fill', 'white')
+        .style('fill', 'white');
+      // 添加动画
+      textSets
         .transition()
         .duration(800)
-        .delay((item, idx) => {
-          // return idx * 200;
-          return 0;
-        })
+        .delay(0)
         .attr('y', (item) => {
           return yScale(item);
         });

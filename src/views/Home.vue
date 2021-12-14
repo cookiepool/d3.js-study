@@ -4,6 +4,7 @@
       <button @click="handleJump(1)">选择元素</button>
       <button @click="handleJump(2)">更新</button>
       <button @click="handleJump(3)">绘制矩形</button>
+      <button @click="handleJump(4)">布局</button>
     </div>
     <hr style="background-color: #fff" />
     <router-view></router-view>
@@ -28,7 +29,10 @@ export default {
           router.push('/up-en-ex');
           break;
         case 3:
-          router.push('/draw-react');
+          router.push('/draw-rect');
+          break;
+        case 4:
+          router.push('/layout-concepts');
       }
     };
 

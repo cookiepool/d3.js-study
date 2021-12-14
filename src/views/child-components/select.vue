@@ -7,6 +7,8 @@
     <p class="hello">Hello D3.js!!!</p>
 
     <div class="fruits"></div>
+
+    <div class="num"></div>
   </div>
 </template>
 
@@ -24,6 +26,13 @@ export default {
       .selectAll('p')
       .data(data.data)
       .join('p')
+      .text((item) => item);
+
+    d3.select('.num')
+      .selectAll('p')
+      .data(data.data)
+      .enter()
+      .append('p')
       .text((item) => item);
   },
   setup() {}
