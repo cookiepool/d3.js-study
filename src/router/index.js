@@ -30,6 +30,11 @@ const routes = [
         path: 'layout-concepts',
         name: 'LayoutConcepts',
         component: () => import('@/views/child-components/layout-concepts.vue')
+      },
+      {
+        path: 'pie',
+        name: 'Pie',
+        component: () => import('@/views/child-components/pie.vue')
       }
     ]
   }

@@ -2,8 +2,54 @@
   <div class="svg">
     <svg id="svgPie" class="svg-histogram" width="1920" height="400"></svg>
 
-    <svg width="10rem" height="5rem" style="background-color: #fff">
-      <rect width="3rem" height="1rem" fill="#008d46" />
+    <svg width="1000" height="1000" style="background-color: #fff">
+      <rect
+        width="100"
+        height="100"
+        fill="#FFC857"
+        x="20"
+        y="20"
+        rx="100"
+        ry="100"
+      />
+
+      <rect
+        width="80"
+        height="150"
+        fill="#C5283D"
+        x="140"
+        y="20"
+        rx="100"
+        ry="15"
+      />
+
+      <ellipse cx="350" cy="100" rx="100" ry="80" fill="#255F85" />
+
+      <circle cx="600" cy="120" r="100" fill="#481D24" />
+
+      <line
+        x1="750"
+        y1="100"
+        x2="850"
+        y2="300"
+        stroke="#a8bca1"
+        stroke-width="6"
+        stroke-dasharray="6"
+      />
+
+      <polygon
+        points="20,200 100,300 20,350"
+        fill="#2FE6DE"
+        stroke="#a8bca1"
+        stroke-width="2"
+      />
+
+      <polyline
+        points="100,200 200,300 100,400 200,500"
+        stroke="#D741A7"
+        stroke-width="4"
+        fill="#fff"
+      />
     </svg>
   </div>
 </template>
