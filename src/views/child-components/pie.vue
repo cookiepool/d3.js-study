@@ -87,13 +87,18 @@ export default {
         .outerRadius(labelRadius);
 
       // 开始绘图
-      let paths = d3
+      let g = d3
         .select('#pie')
         .append('g')
-        .attr('transform', 'translate(500, 250)')
-        .selectAll('path')
+        .attr('transform', 'translate(500, 250)');
+      // 绘制文本
+      g.selectAll('text')
         .data(pieOrigin)
-        .join('path');
+        .join('text')
+        .attr('dx', '-10')
+        .text((item) => N[item.data]);
+      // 绘制环形图
+      let paths = g.selectAll('path').data(pieOrigin).join('path');
 
       // 填充数据
       paths
