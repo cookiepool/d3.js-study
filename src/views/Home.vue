@@ -5,7 +5,8 @@
       <button @click="handleJump(2)">更新</button>
       <button @click="handleJump(3)">绘制矩形</button>
       <button @click="handleJump(4)">布局</button>
-      <button @click="handleJump(5)">饼图</button>
+      <button @click="handleJump(5)">环形图</button>
+      <button @click="handleJump(6)">柱状图</button>
     </div>
     <hr style="background-color: #fff" />
     <router-view></router-view>
@@ -36,7 +37,10 @@ export default {
           router.push('/layout-concepts');
           break;
         case 5:
-          router.push('/pie');
+          router.push('/doughnut-chart');
+          break;
+        case 6:
+          router.push('/bar-chart');
       }
     };
 

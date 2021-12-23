@@ -1,7 +1,8 @@
+/****环形图，参考Demo：https://observablehq.com/@d3/donut-chart***/
 <template>
   <div class="svg">
     <svg
-      id="pie"
+      id="doughnutChart"
       width="1000"
       height="500"
       style="background-color: #fff"
@@ -11,6 +12,7 @@
 
 <script>
 import * as d3 from 'd3';
+
 const data = [
   { name: '<5', value: 19912018 },
   { name: '5-9', value: 20501982 },
@@ -33,7 +35,7 @@ const data = [
 ];
 
 export default {
-  name: 'Select',
+  name: 'DoughnutChart',
   async mounted() {
     this.drawPie();
   },
@@ -88,14 +90,21 @@ export default {
 
       // 开始绘图
       let g = d3
-        .select('#pie')
+        .select('#doughnutChart')
         .append('g')
         .attr('transform', 'translate(500, 250)');
       // 绘制文本
       g.selectAll('text')
         .data(pieOrigin)
         .join('text')
-        .attr('dx', '-10')
+        .attr('visibility', 'hidden')
+        .attr('text-anchor', 'middle') // 让文本居中
+        .attr('class', (item) => `text-center-${item.data}`)
+        .attr('dy', '20')
+        .attr(
+          'style',
+          `font-family:Times New Roman;font-weight:bold;font-size:60px;fill:#000;`
+        )
         .text((item) => N[item.data]);
       // 绘制环形图
       let paths = g.selectAll('path').data(pieOrigin).join('path');
@@ -104,12 +113,12 @@ export default {
       paths
         .attr('fill', (item) => colorScale(N[item.data])) // 前面颜色的比例尺的domian参数使用的name，所以这儿也要取name
         .attr('d', arcOrigin)
+        .attr('class', (item) => `text-center-${item.data}`)
         .append('title')
         .text((item) => title(item.data)); // 当鼠标悬浮在饼上时可以展示一个悬浮提示。
 
       // 绑定事件
       paths.on('mouseover', function (e) {
-        console.log(this);
         // 添加过渡和新的值
         d3.select(this)
           .transition()
@@ -117,6 +126,13 @@ export default {
           .delay(0)
           .attr('fill-opacity', '0.6')
           .attr('d', arcHoverOrigin);
+
+        d3.select(`.${d3.select(this).attr('class')}`)
+          .transition()
+          .duration(200)
+          .delay(0)
+          .attr('transform', 'scale(1)')
+          .attr('visibility', 'visible');
       });
       paths.on('mouseout', function (e) {
         d3.select(this)
@@ -125,6 +141,13 @@ export default {
           .delay(0)
           .attr('fill-opacity', '1')
           .attr('d', arcOrigin);
+
+        d3.select(`.${d3.select(this).attr('class')}`)
+          .transition()
+          .duration(200)
+          .delay(0)
+          .attr('transform', 'scale(0)')
+          .attr('visibility', 'hidden');
       });
     };
 

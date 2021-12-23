@@ -32,9 +32,16 @@ const routes = [
         component: () => import('@/views/child-components/layout-concepts.vue')
       },
       {
-        path: 'pie',
-        name: 'Pie',
-        component: () => import('@/views/child-components/pie.vue')
+        // 环形图（饼图的一类）
+        path: 'doughnut-chart',
+        name: 'DoughnutChart',
+        component: () => import('@/views/charts/doughnut-chart.vue')
+      },
+      {
+        // 柱状图
+        path: 'bar-chart',
+        name: 'BarChart',
+        component: () => import('@/views/charts/bar-chart.vue')
       }
     ]
   }
