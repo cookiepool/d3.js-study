@@ -7,6 +7,7 @@
       <button @click="handleJump(4)">布局</button>
       <button @click="handleJump(5)">环形图</button>
       <button @click="handleJump(6)">柱状图</button>
+      <button @click="handleJump(7)">测试过渡</button>
     </div>
     <hr style="background-color: #fff" />
     <router-view></router-view>
@@ -41,6 +42,9 @@ export default {
           break;
         case 6:
           router.push('/bar-chart');
+          break;
+        case 7:
+          router.push('/bar-chart-transition');
       }
     };
 

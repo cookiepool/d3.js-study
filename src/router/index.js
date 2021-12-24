@@ -42,6 +42,12 @@ const routes = [
         path: 'bar-chart',
         name: 'BarChart',
         component: () => import('@/views/charts/bar-chart.vue')
+      },
+      {
+        // 过渡-trans
+        path: 'bar-chart-transition',
+        name: 'BarChartTransition',
+        component: () => import('@/views/transition/bar-chart-transition.vue')
       }
     ]
   }
