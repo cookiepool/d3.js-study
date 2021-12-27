@@ -112,7 +112,13 @@ export default {
       rectSets
         .transition()
         .duration(800)
-        .delay(0)
+        .delay(function (d, i) {
+          return i * 200;
+        })
+        .ease(d3.easeBack)
+        .on('end', function (d, i) {
+          console.log(d);
+        })
         .attr('y', (i) => yScale(Y[i]))
         .attr('height', (i) => yScale(0) - yScale(Y[i]));
       // 增加悬浮效果
