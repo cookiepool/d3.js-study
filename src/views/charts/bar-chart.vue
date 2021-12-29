@@ -76,7 +76,8 @@ export default {
       let yAxis = d3.axisLeft(yScale).ticks(10);
       // 生成标题
       const formatValue = d3.format(','); // 数字千分符
-      let title = (i) => `${X[i]}\n${formatValue(Y[i])}`;
+      // let title = (i) => `${X[i]}\n${formatValue(Y[i])}`;
+      let title = (i) => `${formatValue(Y[i])}`;
       // 定义渐变
       let linearGradient = d3
         .select('#bar')
@@ -108,6 +109,7 @@ export default {
         .attr('width', xScale.bandwidth())
         .attr('height', 0)
         .attr('style', 'cursor:pointer');
+
       // 增加加载时动画效果
       rectSets
         .transition()
@@ -121,26 +123,63 @@ export default {
         })
         .attr('y', (i) => yScale(Y[i]))
         .attr('height', (i) => yScale(0) - yScale(Y[i]));
+
+      // 增加悬浮文本提示（一般提示）
+      // rectSets.append('title').text(title);
+      // 自定义提示（自定义ToolTip）
+      let toolTips = d3
+        .select('body')
+        .append('div')
+        .attr('class', 'bar-tooltips');
+      toolTips.append('p').attr('class', 'title');
+      toolTips
+        .append('div')
+        .attr('class', 'content')
+        .call((d) => d.append('span').attr('class', 'point'))
+        .call((d) => d.append('span').attr('class', 'detail'));
+
       // 增加悬浮效果
-      rectSets.on('mouseover', function () {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .delay(0)
-          .attr('opacity', '0.7')
-          .attr('transform', 'translate(0, -10)');
-      });
+      rectSets
+        .on('mouseover', function (e, d) {
+          console.log(e);
+          console.log(d);
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .delay(0)
+            .attr('opacity', '0.7');
+
+          // Tooltips悬浮提示
+          toolTips.select('.title').text(X[d]);
+          toolTips.select('.detail').text(title(d));
+          toolTips
+            .style('visibility', 'visible')
+            .style('opacity', '1')
+            .style('transform', `translate(${e.clientX}px, ${e.clientY}px)`);
+          // .style('left', `${e.clientX}px`)
+          // .style('top', `${e.clientY}px`);
+        })
+        .on('mousemove', function (e) {
+          toolTips.style(
+            'transform',
+            `translate(${e.clientX}px, ${e.clientY}px)`
+          );
+          // .style('left', `${e.clientX}px`)
+          // .style('top', `${e.clientY}px`);
+        });
       rectSets.on('mouseout', function () {
         d3.select(this)
           .transition()
           .duration(200)
           .delay(0)
-          .attr('opacity', '1')
-          .attr('transform', 'translate(0, 0)');
+          .attr('opacity', '1');
+
+        toolTips.style('visibility', 'hidden').style('opacity', '0');
       });
 
-      // 增加悬浮文本提示
-      rectSets.append('title').text(title);
+      /***
+       * 绘制坐标轴
+       * ***/
       // 添加x轴
       d3.select('#bar')
         .append('g')
@@ -161,3 +200,57 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.bar-tooltips {
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  border-style: solid;
+  white-space: nowrap;
+  z-index: 9999999;
+  box-shadow: rgb(0 0 0 / 20%) 1px 2px 10px;
+  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s,
+    visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1) 0.2s,
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s,
+    left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s,
+    top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+  background-color: rgb(255, 255, 255);
+  border-width: 1px;
+  border-radius: 4px;
+  color: rgb(102, 102, 102);
+  font: 14px / 21px 'Microsoft YaHei';
+  padding: 10px;
+  top: 0px;
+  left: 0px;
+  border-color: rgb(255, 255, 255);
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  .title {
+    font-size: 16px;
+    color: #666;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .point {
+    margin-right: 4px;
+    border-radius: 10px;
+    width: 10px;
+    height: 10px;
+    background-color: #5470c6;
+  }
+  .detail {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #666;
+    font-weight: 900;
+  }
+}
+</style>
