@@ -7,6 +7,9 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint'
   },
+  globals: {
+    echart: 'readonly'
+  },
   rules: {
     // prettier报错规则
     'prettier/prettier': [

@@ -8,10 +8,16 @@
       style="background-color: #fff"
     ></svg>
   </div>
+
+  <div class="echarts-bar-wraper">
+    <echarts-bar></echarts-bar>
+  </div>
 </template>
 
 <script>
 import * as d3 from 'd3';
+
+import EchartsBar from '@/views/echarts/echarts-bar';
 
 const data = [
   { name: '<5', value: 1000 },
@@ -38,6 +44,9 @@ export default {
   name: 'Bar',
   async mounted() {
     this.drawBar();
+  },
+  components: {
+    EchartsBar
   },
   setup() {
     const drawBar = () => {
