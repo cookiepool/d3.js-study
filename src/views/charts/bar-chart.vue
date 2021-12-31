@@ -16,6 +16,7 @@
 
 <script>
 import * as d3 from 'd3';
+import { onMounted } from 'vue';
 
 import EchartsBar from '@/views/echarts/echarts-bar';
 
@@ -42,9 +43,6 @@ const data = [
 
 export default {
   name: 'Bar',
-  async mounted() {
-    this.drawBar();
-  },
   components: {
     EchartsBar
   },
@@ -60,13 +58,11 @@ export default {
       // 处理数据
       const X = d3.map(data, (d) => d.name);
       const Y = d3.map(data, (d) => d.value);
-      console.log(X, Y);
 
       let xDomain = X;
       let yDomain = [0, d3.max(Y)];
 
       let I = d3.range(X.length);
-      console.log(I);
 
       // 处理X轴和Y轴的数据
       let xScale = d3
@@ -126,9 +122,9 @@ export default {
         .delay(function (d, i) {
           return i * 200;
         })
-        .ease(d3.easeBack)
+        .ease(d3.easeLinear)
         .on('end', function (d, i) {
-          console.log(d);
+          // console.log(d);
         })
         .attr('y', (i) => yScale(Y[i]))
         .attr('height', (i) => yScale(0) - yScale(Y[i]));
@@ -203,9 +199,10 @@ export default {
         .attr('style', 'color: #7776BC;font-size:12px');
     };
 
-    return {
-      drawBar
-    };
+    onMounted(() => {
+      console.log('+++++++++++D3-Drwa-Bar++++++++++++');
+      drawBar();
+    });
   }
 };
 </script>
