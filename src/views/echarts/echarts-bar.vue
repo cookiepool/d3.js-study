@@ -23,7 +23,7 @@ const data = [
   { name: '70-74', value: 7721 },
   { name: '75-79', value: 7012 },
   { name: '80-84', value: 5429 },
-  { name: '≥85', value: 9852 }
+  { name: '≥85', value: 10000 }
 ];
 let X = [];
 let Y = [];
@@ -160,7 +160,7 @@ export default defineComponent({
             // 坐标轴刻度的显示间隔，在类目轴中有效。默认同 axisLabel.interval 一样。
             interval: 'auto',
             // 坐标轴刻度是否朝内，默认朝外。
-            inside: true,
+            inside: false,
             // 坐标轴刻度的长度。
             length: 5
           },
@@ -195,7 +195,7 @@ export default defineComponent({
           minorSplitLine: {},
           // 坐标轴在 grid 区域中的分隔区域，默认不显示
           splitArea: {
-            show: true
+            show: false
           },
           // 坐标轴指示器配置项。
           axisPointer: {},
@@ -220,7 +220,17 @@ export default defineComponent({
           realtimeSort: false,
           // 动态排序柱状图用于排序的系列 id。目前只支持一个系列的柱状图排序效果，所以这个值只能取 0。
           // 仅当 y 轴 realtimeSort 为 true 并且 type 是 'value' 时有效。
-          sortSeriesIndex: 0
+          sortSeriesIndex: 0,
+          // 坐标轴在 grid 区域中的分隔线。（就坐标轴刻度以上会绘制一条分割线）
+          splitLine: {
+            show: true,
+            interval: 'auto'
+          },
+          axisLine: {
+            show: true,
+            symbol: ['none', 'arrow'],
+            symbolOffset: [0, 12]
+          }
         },
         series: [
           {
@@ -228,7 +238,20 @@ export default defineComponent({
             type: 'bar',
             data: Y
           }
-        ]
+        ],
+        // 整个画布背景色
+        backgroundColor: '#C7D9B7',
+        // 全局文本样式
+        textStyle: {},
+        // 是否开启动画
+        animation: true,
+        animationThreshold: 2000,
+        animationDuration: 1000,
+        animationEasing: 'elasticOut',
+        animationDelay: function (idx) {
+          return idx * 100;
+        },
+        animationDurationUpdate: 1000
       };
 
       bar.setOption(options);
