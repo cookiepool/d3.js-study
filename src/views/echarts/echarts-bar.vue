@@ -209,6 +209,7 @@ export default defineComponent({
           // x 轴所在的 grid 的索引，默认位于第一个 grid。如果你的grid配置了多个，则需要知道index；
           // 参考这个示例：https://echarts.apache.org/examples/zh/editor.html?c=scatter-anscombe-quartet
           gridIndex: 0,
+          type: 'value',
           // 坐标轴名称
           name: '数值',
           // 坐标轴名称显示位置，start middle center end
